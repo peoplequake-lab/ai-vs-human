@@ -2,254 +2,276 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta property="og:title" content="AI vs 나 — 당신의 AI 협업 지능은 몇 점? | Peoplequake Lab">
-<meta property="og:description" content="5가지 실제 상황에서 당신의 선택과 AI의 선택을 비교해보세요. 무료 · 3분">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta property="og:title" content="AI vs 나 — 당신의 AI 협업 지능은? | Peoplequake Lab">
+<meta property="og:description" content="5가지 실제 상황에서 나라면? AI라면? 당신의 선택을 AI와 비교해보세요.">
 <title>AI vs 나 | Peoplequake Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:#0C0C0C;color:#F0F0F0;min-height:100vh;-webkit-font-smoothing:antialiased}
-#loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0C0C0C;z-index:9999;transition:opacity .4s}
-#loading.hidden{opacity:0;pointer-events:none}
-.spin{width:32px;height:32px;border:2px solid #222;border-top-color:#24C699;border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:#0A0A0A;color:#F0F0F0;min-height:100vh;-webkit-font-smoothing:antialiased}
+#ld{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0A0A0A;z-index:9999;transition:opacity .4s}
+#ld.h{opacity:0;pointer-events:none}
+.sp{width:30px;height:30px;border:2px solid #1E1E1E;border-top-color:#24C699;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes in{from{opacity:0}to{opacity:1}}
-@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
-@keyframes bar-pulse{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.7)}}
-.aup{animation:up .45s ease forwards}
-.ain{animation:in .4s ease forwards}
-.apop{animation:pop .35s cubic-bezier(.34,1.56,.64,1) forwards}
-.wrap{max-width:520px;margin:0 auto;padding:0 18px}
+@keyframes pop{0%{transform:scale(.88);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes glow{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes bar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+.au{animation:up .4s ease forwards}
+.ai{animation:in .35s ease forwards}
+.ap{animation:pop .3s cubic-bezier(.34,1.56,.64,1) forwards}
 
-/* COVER */
-.cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 18px;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(36,198,153,.07) 0%,transparent 70%),#0C0C0C}
-.brand-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(36,198,153,.08);border:1px solid rgba(36,198,153,.25);border-radius:100px;padding:7px 16px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#24C699;text-transform:uppercase;margin-bottom:40px}
-.bars{display:flex;align-items:flex-end;gap:2px;height:12px}
-.bars span{display:block;width:2px;background:#24C699;border-radius:1px;animation:bar-pulse .9s ease-in-out infinite}
-.bars span:nth-child(1){height:5px;animation-delay:0s}
-.bars span:nth-child(2){height:9px;animation-delay:.15s}
-.bars span:nth-child(3){height:12px;animation-delay:.3s}
-.bars span:nth-child(4){height:7px;animation-delay:.45s}
-.bars span:nth-child(5){height:10px;animation-delay:.6s}
-.cover-vs{font-size:15px;font-weight:700;color:#555;letter-spacing:3px;margin-bottom:12px;text-align:center}
-.cover-title{font-size:52px;font-weight:900;color:#F0F0F0;text-align:center;letter-spacing:-2px;line-height:1;margin-bottom:8px}
+/* LAYOUT */
+.page{min-height:100vh;display:flex;flex-direction:column}
+.inner{width:100%;max-width:560px;margin:0 auto;padding:0 18px}
+
+/* BRAND */
+.bpill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(36,198,153,.3);border-radius:100px;padding:6px 14px;font-size:10px;font-weight:700;letter-spacing:1.4px;color:#24C699;text-transform:uppercase;background:rgba(36,198,153,.06)}
+.bbars{display:flex;align-items:flex-end;gap:2px;height:11px}
+.bbars span{display:block;width:2px;border-radius:1px;animation:bar .9s ease-in-out infinite}
+.bbars span:nth-child(1){height:5px;background:#F97316;animation-delay:0s}
+.bbars span:nth-child(2){height:9px;background:#24C699;animation-delay:.15s}
+.bbars span:nth-child(3){height:11px;background:#F97316;animation-delay:.3s}
+.bbars span:nth-child(4){height:7px;background:#24C699;animation-delay:.45s}
+.bbars span:nth-child(5){height:10px;background:#F97316;animation-delay:.6s}
+
+/* ─── COVER ─── */
+.cover{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 18px;background:radial-gradient(ellipse 70% 40% at 50% 20%,rgba(249,115,22,.06) 0%,transparent 50%),radial-gradient(ellipse 70% 40% at 50% 80%,rgba(36,198,153,.06) 0%,transparent 50%),#0A0A0A;text-align:center}
+.vs-wrap{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.vs-side{display:flex;flex-direction:column;align-items:center;gap:6px}
+.vs-emoji{font-size:40px;line-height:1}
+.vs-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.vs-text{font-size:36px;font-weight:900;color:#F0F0F0;letter-spacing:-1px;padding:0 4px}
+.cover-title{font-size:36px;font-weight:900;line-height:1.15;letter-spacing:-1px;margin-bottom:12px}
+.cover-title em{font-style:normal;color:#F97316}
 .cover-title span{color:#24C699}
-.cover-sub{font-size:15px;color:#555;text-align:center;line-height:1.7;margin-bottom:40px}
-.info-row{display:flex;gap:8px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
-.info-badge{background:#131313;border:1px solid #1E1E1E;border-radius:100px;padding:7px 14px;font-size:11px;color:#555}
-.btn-start{display:block;width:100%;max-width:300px;background:#24C699;color:#000;border:none;border-radius:100px;padding:17px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 0 30px rgba(36,198,153,.2)}
-.btn-start:hover{transform:translateY(-2px);box-shadow:0 4px 40px rgba(36,198,153,.35)}
+.cover-sub{font-size:14px;color:#555;line-height:1.75;margin-bottom:36px;max-width:340px}
+.cover-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.cbadge{background:#111;border:1px solid #1E1E1E;border-radius:100px;padding:6px 14px;font-size:11px;color:#555}
+.btn-go{display:block;width:100%;max-width:300px;border:none;border-radius:100px;padding:17px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#F97316,#F59E0B);color:#000;transition:all .2s;box-shadow:0 0 30px rgba(249,115,22,.25)}
+.btn-go:hover{transform:translateY(-2px);box-shadow:0 4px 36px rgba(249,115,22,.4)}
 
-/* GAME SCREEN */
-.game{min-height:100vh;background:#0C0C0C;padding-bottom:40px}
-.game-top{padding:20px 18px 0;max-width:520px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.dots{display:flex;gap:6px}
-.dot{width:8px;height:8px;border-radius:50%;background:#1E1E1E;transition:background .3s}
-.dot.done{background:#24C699}
-.dot.active{background:#24C699;box-shadow:0 0 8px rgba(36,198,153,.5)}
-.score-badge{background:#131313;border:1px solid #1E1E1E;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:#24C699}
-.scenario-card{background:#111;border-radius:16px;padding:22px;margin-bottom:20px;border-left:2px solid #24C699}
-.scenario-num{font-size:10px;font-weight:700;letter-spacing:1.2px;color:#24C699;text-transform:uppercase;margin-bottom:8px}
-.scenario-ctx{font-size:13px;color:#555;line-height:1.7;margin-bottom:14px}
-.scenario-q{font-size:17px;font-weight:700;color:#F0F0F0;line-height:1.4}
-.options{display:flex;flex-direction:column;gap:10px}
-.opt-btn{background:#111;border:1.5px solid #1E1E1E;border-radius:13px;padding:16px 18px;cursor:pointer;text-align:left;width:100%;font-family:inherit;color:#CCC;font-size:13px;line-height:1.65;transition:all .18s;display:flex;align-items:flex-start;gap:12px}
-.opt-btn:hover:not(:disabled){border-color:#24C699;background:rgba(36,198,153,.05);color:#F0F0F0}
-.opt-btn:disabled{opacity:.35;cursor:default}
-.opt-lbl{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#1A1A1A;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#444;transition:all .18s;margin-top:1px}
+/* ─── GAME ─── */
+.game-hdr{padding:18px 18px 0;display:flex;align-items:center;justify-content:space-between;max-width:560px;margin:0 auto 20px}
+.prog-dots{display:flex;gap:5px}
+.pdot{width:28px;height:4px;border-radius:2px;background:#1A1A1A;transition:background .3s,width .3s}
+.pdot.done{background:#24C699}
+.pdot.active{background:#F97316}
+.score-box{background:#111;border:1px solid #1E1E1E;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700}
+.score-box span:first-child{color:#F97316}
+.score-box span:last-child{color:#444}
+.sc-card{background:#111;border-radius:16px;padding:20px;margin-bottom:18px;border-left:2px solid #F97316}
+.sc-num{font-size:9px;font-weight:700;letter-spacing:1.2px;color:#F97316;text-transform:uppercase;margin-bottom:7px}
+.sc-ctx{font-size:13px;color:#555;line-height:1.7;margin-bottom:12px}
+.sc-q{font-size:17px;font-weight:700;color:#F0F0F0;line-height:1.4}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:#111;border:1.5px solid #1A1A1A;border-radius:13px;padding:15px 17px;cursor:pointer;text-align:left;width:100%;font-family:inherit;color:#BBB;font-size:13px;line-height:1.65;transition:all .18s;display:flex;align-items:flex-start;gap:11px}
+.opt:hover:not(:disabled){border-color:#F97316;background:rgba(249,115,22,.05);color:#F0F0F0}
+.opt:disabled{opacity:.3;cursor:default}
+.olbl{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#1A1A1A;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#444;margin-top:1px;transition:all .18s}
 
-/* REVEAL SCREEN */
-.reveal{min-height:100vh;background:#0C0C0C;padding-bottom:40px}
-.reveal-top{background:#111;padding:18px;border-bottom:1px solid #1A1A1A;margin-bottom:0}
-.reveal-num{font-size:10px;font-weight:700;letter-spacing:1.2px;color:#555;text-transform:uppercase;margin-bottom:6px}
-.reveal-q{font-size:14px;font-weight:600;color:#888;line-height:1.5}
-.choices{padding:18px;display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto}
-.choice-card{border-radius:14px;padding:16px;border:1.5px solid}
-.choice-card.yours{border-color:#555;background:#131313}
-.choice-card.yours.best{border-color:#24C699;background:rgba(36,198,153,.06)}
-.choice-card.ai{border-color:rgba(36,198,153,.35);background:rgba(36,198,153,.06)}
-.choice-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.choice-tag{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px}
-.tag-yours{background:#1E1E1E;color:#888}
-.tag-best{background:rgba(36,198,153,.15);color:#24C699}
-.tag-ai{background:rgba(36,198,153,.15);color:#24C699}
-.tag-same{background:rgba(36,198,153,.15);color:#24C699}
-.choice-pts{margin-left:auto;font-size:11px;font-weight:700;color:#24C699}
-.choice-text{font-size:13px;color:#CCC;line-height:1.6}
-.reveal-insight{margin:0 18px 16px;max-width:520px;margin-left:auto;margin-right:auto;background:#131313;border-radius:14px;padding:16px;border:1px solid #1E1E1E}
-.insight-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;color:#24C699;text-transform:uppercase;margin-bottom:8px}
-.insight-txt{font-size:13px;color:#888;line-height:1.75}
-.pts-pop{margin:0 18px 20px;max-width:520px;margin-left:auto;margin-right:auto;text-align:center;padding:14px;background:rgba(36,198,153,.05);border:1px solid rgba(36,198,153,.2);border-radius:14px}
-.pts-num{font-size:28px;font-weight:900;color:#24C699;line-height:1}
-.pts-label{font-size:11px;color:#555;margin-top:4px}
-.btn-next{display:block;width:calc(100% - 36px);max-width:484px;margin:0 auto;background:#24C699;color:#000;border:none;border-radius:100px;padding:15px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
-.btn-next:hover{background:#1aaa80}
+/* ─── REVEAL ─── */
+.rv-top{background:#0F0F0F;padding:18px;border-bottom:1px solid #1A1A1A;margin-bottom:18px}
+.rv-num{font-size:9px;font-weight:700;letter-spacing:1.2px;color:#444;text-transform:uppercase;margin-bottom:5px}
+.rv-ctx{font-size:13px;color:#666;line-height:1.6}
+.vs-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.vc{border-radius:14px;padding:14px;border:1.5px solid}
+.vc-human{border-color:rgba(249,115,22,.4);background:rgba(249,115,22,.05)}
+.vc-ai{border-color:rgba(36,198,153,.4);background:rgba(36,198,153,.05)}
+.vc-same{border-color:rgba(36,198,153,.5);background:rgba(36,198,153,.08)}
+.vc-tag{font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:4px}
+.vc-tag.human{color:#F97316}
+.vc-tag.ai-t{color:#24C699}
+.vc-pts{font-size:18px;font-weight:900;margin-bottom:5px}
+.vc-pts.human{color:#F97316}
+.vc-pts.ai-t{color:#24C699}
+.vc-txt{font-size:11.5px;color:#888;line-height:1.6}
+.insight-box{background:#111;border-radius:14px;padding:16px;border:1px solid #1A1A1A;margin-bottom:14px}
+.insight-lbl{font-size:8.5px;font-weight:700;letter-spacing:1.2px;color:#24C699;text-transform:uppercase;margin-bottom:8px}
+.insight-txt{font-size:13px;color:#888;line-height:1.78}
+.diff-bar{background:#111;border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;border:1px solid #1A1A1A}
+.diff-lbl{font-size:11px;color:#555}
+.diff-val{font-size:20px;font-weight:900}
+.btn-nxt{display:block;width:100%;border:none;border-radius:100px;padding:15px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#F97316,#F59E0B);color:#000;transition:all .2s}
+.btn-nxt:hover{opacity:.9}
 
-/* RESULTS */
-.results{min-height:100vh;background:#0C0C0C;padding-bottom:60px}
-.results-hero{background:radial-gradient(ellipse 100% 60% at 50% 0%,rgba(36,198,153,.08) 0%,transparent 70%),#0C0C0C;padding:50px 18px 32px;text-align:center}
-.score-ring{width:100px;height:100px;border-radius:50%;background:conic-gradient(#24C699 var(--pct),#1A1A1A 0);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative}
-.score-ring::after{content:'';position:absolute;width:78px;height:78px;background:#0C0C0C;border-radius:50%}
-.score-num{position:relative;z-index:1;font-size:22px;font-weight:900;color:#F0F0F0;line-height:1}
-.score-total{font-size:11px;color:#555}
-.result-grade{font-size:11px;color:#24C699;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;margin-bottom:6px}
-.result-title{font-size:26px;font-weight:900;color:#F0F0F0;margin-bottom:12px;letter-spacing:-.5px}
-.result-sub{display:inline-block;border:1px solid rgba(36,198,153,.3);border-radius:100px;padding:8px 20px;font-size:12px;color:#24C699;background:rgba(36,198,153,.07)}
-.results-body{padding:0 18px;max-width:520px;margin:0 auto}
-.r-section{background:#111;border:1px solid #1A1A1A;border-radius:16px;padding:22px;margin-top:14px}
-.r-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;color:#24C699;text-transform:uppercase;margin-bottom:10px}
-.r-txt{font-size:13px;color:#888;line-height:1.8}
-.review-item{padding:12px 0;border-bottom:1px solid #1A1A1A;display:flex;gap:12px;align-items:flex-start}
-.review-item:last-child{border-bottom:none;padding-bottom:0}
-.review-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.review-content{flex:1}
-.review-q{font-size:12px;color:#555;margin-bottom:3px}
-.review-choice{font-size:12px;color:#888;margin-bottom:2px}
-.review-pts{font-size:11px;font-weight:700}
-.cta-box{margin-top:14px;background:linear-gradient(135deg,rgba(36,198,153,.12),rgba(36,198,153,.04));border:1px solid rgba(36,198,153,.25);border-radius:16px;padding:22px;text-align:center}
-.cta-title{font-size:15px;font-weight:700;color:#F0F0F0;margin-bottom:8px}
-.cta-desc{font-size:12px;color:#666;line-height:1.7;margin-bottom:18px}
-.btn-cta{display:inline-block;background:#24C699;color:#000;border:none;border-radius:100px;padding:13px 28px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;margin-bottom:10px}
+/* ─── RESULTS ─── */
+.res-hero{padding:50px 18px 32px;text-align:center;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(249,115,22,.07) 0%,transparent 60%),#0A0A0A}
+.score-circle{position:relative;width:110px;height:110px;margin:0 auto 20px}
+.score-circle svg{transform:rotate(-90deg)}
+.sc-bg{fill:none;stroke:#1A1A1A;stroke-width:6}
+.sc-fg{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1s ease}
+.sc-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sc-n{font-size:24px;font-weight:900;color:#F0F0F0;line-height:1}
+.sc-d{font-size:10px;color:#444}
+.res-grade{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;color:#F97316}
+.res-title{font-size:26px;font-weight:900;color:#F0F0F0;margin-bottom:12px;letter-spacing:-.5px}
+.res-sub{display:inline-block;border:1px solid rgba(249,115,22,.3);border-radius:100px;padding:8px 20px;font-size:12px;color:#F97316;background:rgba(249,115,22,.07)}
+.res-body{padding:0 18px 60px;max-width:560px;margin:0 auto}
+.rs{background:#111;border:1px solid #1A1A1A;border-radius:15px;padding:20px;margin-top:12px}
+.rs-lbl{font-size:8.5px;font-weight:700;letter-spacing:1.2px;color:#F97316;text-transform:uppercase;margin-bottom:10px}
+.rs-txt{font-size:13px;color:#888;line-height:1.8}
+.rev-row{padding:10px 0;border-bottom:1px solid #151515;display:flex;gap:10px;align-items:flex-start}
+.rev-row:last-child{border-bottom:none;padding-bottom:0}
+.rev-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.rev-q{font-size:11.5px;color:#555;margin-bottom:2px}
+.rev-c{font-size:11.5px;color:#777;margin-bottom:2px}
+.rev-p{font-size:11px;font-weight:700}
+.cta-box{margin-top:12px;background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(36,198,153,.06));border:1px solid rgba(249,115,22,.2);border-radius:15px;padding:22px;text-align:center}
+.cta-t{font-size:15px;font-weight:700;color:#F0F0F0;margin-bottom:8px}
+.cta-d{font-size:12px;color:#666;line-height:1.75;margin-bottom:18px}
+.btn-cta{border:none;border-radius:100px;padding:13px 26px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;background:#24C699;color:#000;transition:all .2s;display:inline-block;margin-bottom:10px}
 .btn-cta:hover{background:#1aaa80}
-.btn-again{display:block;width:100%;background:transparent;border:1px solid #1E1E1E;color:#555;border-radius:100px;padding:12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .2s}
-.btn-again:hover{border-color:#333;color:#888}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#24C699;color:#000;font-weight:700;padding:11px 26px;border-radius:100px;font-size:12px;animation:up .3s ease;z-index:9999;white-space:nowrap}
-@media(max-width:380px){.cover-title{font-size:42px}.scenario-q{font-size:15px}}
+.act-row{display:flex;gap:8px;margin-top:8px}
+.btn-sh,.btn-ag{flex:1;background:transparent;border:1px solid #1E1E1E;color:#555;border-radius:100px;padding:11px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-sh:hover,.btn-ag:hover{border-color:#333;color:#888}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#F97316;color:#000;font-weight:700;padding:11px 24px;border-radius:100px;font-size:12px;animation:up .3s ease;z-index:9999;white-space:nowrap}
+@media(max-width:380px){.cover-title{font-size:30px}.vs-text{font-size:28px}.vs-emoji{font-size:32px}}
 </style>
 </head>
 <body>
-<div id="loading"><div class="spin"></div></div>
+<div id="ld"><div class="sp"></div></div>
 <div id="root"></div>
 <script type="text/babel">
-const {useState,useEffect} = React;
+const {useState,useEffect,useRef} = React;
 
-const SCENARIOS = [
+const SC = [
   {
     id:1,
     ctx:"내일 팀 회식이 있습니다. 팀원 10명의 선호도(채식 2명, 매운 음식 불가 1명)와 예산(1인 3만원 이하)을 알고 있어요. 장소를 정해야 합니다.",
     q:"당신의 선택은?",
     opts:[
-      {lbl:"A",txt:"AI에게 조건을 입력해 후보 3곳을 추천받고, 최종 선택은 내가 한다",pts:20},
-      {lbl:"B",txt:"AI가 첫 번째로 추천한 식당을 바로 예약한다",pts:5},
-      {lbl:"C",txt:"직접 네이버 지도로 조건에 맞는 곳을 검색해 고른다",pts:14},
-      {lbl:"D",txt:"팀원 단톡에 \"어디서 먹을까요?\"를 올려 다수결로 정한다",pts:8},
+      {l:"A",t:"AI에게 조건을 입력해 후보 3곳을 추천받고, 최종 선택은 내가 한다",p:20},
+      {l:"B",t:"AI가 첫 번째로 추천한 식당을 바로 예약한다",p:5},
+      {l:"C",t:"직접 검색해서 조건에 맞는 곳을 내가 고른다",p:14},
+      {l:"D",t:"팀원 단톡에 \"어디서 먹을까요?\"를 올려 다수결로 정한다",p:8},
     ],
     ai:0,
-    insight:"조건 필터링처럼 반복적인 데이터 처리는 AI가 훨씬 빠릅니다. 단, 팀의 분위기와 특별한 사정을 고려한 최종 선택은 사람이 해야 합니다. '정보 수집은 AI에게, 관계적 판단은 나에게' — 이 분리가 협업의 핵심입니다.",
+    why:"조건 필터링은 AI가 빠릅니다. 단, 팀의 분위기와 관계를 고려한 최종 선택은 사람이 해야 합니다. '정보 수집은 AI에게, 관계적 판단은 나에게' — 이 분리가 협업의 핵심입니다.",
   },
   {
     id:2,
     ctx:"부모님 결혼 30주년 기념일입니다. 평소 말로는 못 했던 감사한 마음을 담은 편지를 쓰고 싶습니다.",
     q:"당신은 어떻게 쓰나요?",
     opts:[
-      {lbl:"A",txt:"\"부모님께 감사 편지 써줘\"라고 AI에게 요청하고 그대로 보낸다",pts:0},
-      {lbl:"B",txt:"처음부터 끝까지 내가 직접 마음을 담아 쓴다",pts:20},
-      {lbl:"C",txt:"내가 초안을 쓴 뒤, AI에게 문장만 다듬어달라고 한다",pts:17},
-      {lbl:"D",txt:"AI가 쓴 편지에 마지막 문장 하나만 내가 추가한다",pts:5},
+      {l:"A",t:"\"부모님께 감사 편지 써줘\"라고 AI에게 요청하고 그대로 보낸다",p:0},
+      {l:"B",t:"처음부터 끝까지 내가 직접 마음을 담아 쓴다",p:20},
+      {l:"C",t:"내가 초안을 쓴 뒤, AI에게 문장만 다듬어달라고 한다",p:17},
+      {l:"D",t:"AI가 쓴 편지에 마지막 문장 하나만 내가 추가한다",p:5},
     ],
     ai:1,
-    insight:"진심이 핵심인 글쓰기에서 AI는 '대체자'가 아닌 '편집자' 역할에 머물러야 합니다. 받는 사람이 AI가 썼다는 걸 느끼는 순간 감동은 사라집니다. 가장 인간적인 순간일수록, AI는 뒤로 물러나야 합니다.",
+    why:"진심이 핵심인 글쓰기에서 AI는 '대체자'가 아닌 '편집자' 역할에 머물러야 합니다. 받는 사람이 AI가 썼다는 걸 느끼는 순간 감동은 사라집니다.",
   },
   {
     id:3,
     ctx:"처음 거래하는 파트너사로부터 계약서를 받았습니다. 법률 용어가 어렵고 계약 규모가 큽니다.",
     q:"어떻게 검토하나요?",
     opts:[
-      {lbl:"A",txt:"AI에게 계약서를 올리고 '불리한 조항과 리스크를 찾아줘'라고 먼저 요청한다",pts:18},
-      {lbl:"B",txt:"AI가 문제없다고 하면 바로 서명한다",pts:0},
-      {lbl:"C",txt:"AI로 초벌 검토 후, 핵심 조항은 반드시 변호사에게 확인한다",pts:20},
-      {lbl:"D",txt:"법률 지식이 없으니 전부 변호사에게 맡긴다",pts:13},
+      {l:"A",t:"AI에게 계약서를 올리고 불리한 조항과 리스크를 먼저 찾아달라고 한다",p:18},
+      {l:"B",t:"AI가 문제없다고 하면 바로 서명한다",p:0},
+      {l:"C",t:"AI로 초벌 검토 후, 핵심 조항은 반드시 변호사에게 확인한다",p:20},
+      {l:"D",t:"법률 지식이 없으니 전부 변호사에게 맡긴다",p:13},
     ],
     ai:2,
-    insight:"AI는 계약서의 잠재적 리스크를 빠르게 찾아내는 '1차 필터'로 탁월합니다. 단, 법적 구속력이 있는 결정은 반드시 전문가 확인이 필요합니다. AI를 '최종 검토자'로 쓰는 순간, 리스크는 당신이 온전히 떠안게 됩니다.",
+    why:"AI는 리스크를 빠르게 찾아내는 '1차 필터'로 탁월합니다. 단, 법적 구속력이 있는 결정은 반드시 전문가 확인이 필요합니다. AI를 '최종 검토자'로 쓰는 순간 리스크는 당신이 온전히 떠안습니다.",
   },
   {
     id:4,
     ctx:"고객이 SNS에 '최악의 서비스'라며 부정 리뷰를 남겼습니다. 수백 명이 이미 봤습니다.",
     q:"어떻게 대응하나요?",
     opts:[
-      {lbl:"A",txt:"AI가 작성한 공식 사과문을 수정 없이 바로 올린다",pts:5},
-      {lbl:"B",txt:"직접 진심을 담은 개인적인 답변을 쓴다",pts:15},
-      {lbl:"C",txt:"AI 초안을 받되, 브랜드 톤과 진정성을 살려 다시 써서 올린다",pts:20},
-      {lbl:"D",txt:"72시간 지켜보다 조용히 넘어가길 기다린다",pts:0},
+      {l:"A",t:"AI가 작성한 공식 사과문을 수정 없이 바로 올린다",p:5},
+      {l:"B",t:"직접 진심을 담은 개인적인 답변을 쓴다",p:15},
+      {l:"C",t:"AI 초안을 받되, 브랜드 톤과 진정성을 살려 다시 써서 올린다",p:20},
+      {l:"D",t:"72시간 지켜보다 조용히 넘어가길 기다린다",p:0},
     ],
     ai:2,
-    insight:"공개적인 리뷰 대응은 브랜드 이미지와 직결됩니다. AI는 빠른 초안을 제공하지만, 진정성과 브랜드의 목소리는 사람이 살려야 합니다. 또한 대응 속도 역시 중요한 요소입니다 — 침묵은 무관심으로 읽힙니다.",
+    why:"공개적인 리뷰 대응은 브랜드 이미지와 직결됩니다. AI는 빠른 초안을 제공하지만, 진정성과 브랜드의 목소리는 사람이 살려야 합니다. 침묵은 무관심으로 읽힙니다.",
   },
   {
     id:5,
-    ctx:"현재 회사에서 10년 근무했습니다. 스타트업에서 현재보다 연봉 40% 높은 이직 제안이 왔습니다. 안정성 vs 성장 기회 사이에서 고민됩니다.",
+    ctx:"현재 회사에서 10년 근무했습니다. 스타트업에서 연봉 40% 높은 이직 제안이 왔습니다. 안정성 vs 성장 기회 사이에서 고민됩니다.",
     q:"어떻게 결정하나요?",
     opts:[
-      {lbl:"A",txt:"AI에게 두 회사의 장단점 분석을 맡기고 AI의 결론을 따른다",pts:0},
-      {lbl:"B",txt:"AI로 두 회사 정보를 수집·구조화하고, 최종 결정은 내가 한다",pts:20},
-      {lbl:"C",txt:"주변 사람들의 의견만 듣고 결정한다",pts:7},
-      {lbl:"D",txt:"직관을 따른다",pts:7},
+      {l:"A",t:"AI에게 장단점 분석을 맡기고 AI의 결론을 따른다",p:0},
+      {l:"B",t:"AI로 두 회사 정보를 수집·구조화하고, 최종 결정은 내가 한다",p:20},
+      {l:"C",t:"주변 사람들의 의견만 듣고 결정한다",p:7},
+      {l:"D",t:"직관을 따른다",p:7},
     ],
     ai:1,
-    insight:"인생의 중요한 결정에서 AI는 '정보 수집과 구조화'를 도울 수 있습니다. 하지만 당신의 가치관, 리스크 허용 범위, 삶의 방향은 AI가 알 수 없습니다. 정보는 AI에게 맡기되, 결정권은 반드시 당신이 가져야 합니다.",
+    why:"인생의 중요한 결정에서 AI는 '정보 수집과 구조화'를 도울 수 있습니다. 하지만 당신의 가치관, 리스크 허용 범위, 삶의 방향은 AI가 알 수 없습니다. 결정권은 반드시 당신이 가져야 합니다.",
   },
 ];
 
-const GRADES = [
-  {min:85,grade:"AI 지휘자",sub:"AI와 인간 판단을 최적으로 조합하는 사람",desc:"당신은 AI를 효율적으로 활용하면서도, 판단이 필요한 순간에는 반드시 자신의 기준을 적용합니다. 이 균형 감각이 AI 시대에 가장 중요한 역량입니다.",color:"#24C699"},
-  {min:65,grade:"균형 협업자",sub:"AI 활용 감각이 좋고, 성장 중인 사람",desc:"AI와 인간 판단을 잘 나누고 있지만, 몇몇 상황에서 AI에 조금 더 의존하거나 반대로 혼자 처리하려는 경향이 있습니다. 조금 더 의식적으로 역할을 나누면 90점대가 가능합니다.",color:"#7DD3C0"},
-  {min:40,grade:"조심스러운 탐험가",sub:"AI 활용의 기준을 세우는 중인 사람",desc:"AI를 아직 완전히 신뢰하지 못하거나, 반대로 너무 의존하는 경향이 있습니다. '언제 AI에게 맡기고, 언제 내가 직접 해야 하는가'에 대한 자신만의 기준이 필요합니다.",color:"#F0A500"},
-  {min:0,grade:"성장 중인 AI 파트너",sub:"AI 활용 역량을 키울 기회가 있는 사람",desc:"AI를 과도하게 신뢰하거나, 반대로 거의 활용하지 않는 패턴이 보입니다. AI 리터러시를 키우는 것이 지금 가장 중요한 과제입니다.",color:"#888"},
+const GRADES=[
+  {min:85,g:"AI 지휘자",sub:"AI와 인간 판단을 최적으로 조합하는 사람",desc:"AI를 효율적으로 활용하면서도, 판단이 필요한 순간에는 반드시 자신의 기준을 적용합니다. 이 균형 감각이 AI 시대에 가장 중요한 역량입니다.",c:"#F97316"},
+  {min:65,g:"균형 협업자",sub:"AI 활용 감각이 좋고, 성장 중인 사람",desc:"AI와 인간 판단을 잘 나누고 있지만, 몇몇 상황에서 조금 더 의식적으로 역할을 나누면 90점대가 가능합니다.",c:"#FBBF24"},
+  {min:40,g:"조심스러운 탐험가",sub:"AI 활용의 기준을 세우는 중인 사람",desc:"'언제 AI에게 맡기고, 언제 내가 직접 해야 하는가'에 대한 자신만의 기준이 필요합니다.",c:"#60A5FA"},
+  {min:0,g:"성장 중인 AI 파트너",sub:"AI 활용 역량을 키울 기회가 있는 사람",desc:"AI를 과도하게 신뢰하거나 반대로 거의 활용하지 않는 패턴이 보입니다. AI 리터러시를 키우는 것이 지금 가장 중요한 과제입니다.",c:"#888"},
 ];
+const getGrade=s=>GRADES.find(g=>s>=g.min);
 
-const getGrade = (score) => GRADES.find(g => score >= g.min);
-
-function CoverScreen({onStart}) {
-  return (
+// ── COVER
+function Cover({onStart}){
+  return(
     <div className="cover">
-      <div className="aup" style={{width:'100%',maxWidth:484,textAlign:'center'}}>
-        <div className="brand-pill">
-          <div className="bars"><span/><span/><span/><span/><span/></div>
+      <div className="au" style={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',maxWidth:480}}>
+        <div className="bpill" style={{marginBottom:36}}>
+          <div className="bbars"><span/><span/><span/><span/><span/></div>
           Peoplequake Lab
         </div>
-        <div className="cover-vs">AI  VS  나</div>
-        <h1 className="cover-title">당신의<br/><span>선택</span>은?</h1>
-        <p className="cover-sub">5가지 실제 상황에서 당신의 선택과<br/>AI의 선택을 비교해 보세요.<br/>당신의 <strong style={{color:'#F0F0F0'}}>AI 협업 지능</strong>을 확인할 수 있습니다.</p>
-        <div className="info-row">
-          <span className="info-badge">⚡ 약 3분</span>
-          <span className="info-badge">📍 5가지 상황</span>
-          <span className="info-badge">🔒 개인정보 수집 없음</span>
+        <div className="vs-wrap">
+          <div className="vs-side">
+            <div className="vs-emoji">🧑</div>
+            <div className="vs-label" style={{color:'#F97316'}}>나</div>
+          </div>
+          <div className="vs-text">VS</div>
+          <div className="vs-side">
+            <div className="vs-emoji">🤖</div>
+            <div className="vs-label" style={{color:'#24C699'}}>AI</div>
+          </div>
         </div>
-        <button className="btn-start" onClick={onStart}>지금 바로 시작하기 →</button>
+        <h1 className="cover-title">같은 상황,<br/><em>다른</em> <span>선택</span></h1>
+        <p className="cover-sub">5가지 실제 상황에서 당신이라면 어떻게 할까요?<br/>AI의 선택과 비교하며 당신의 <strong style={{color:'#F0F0F0'}}>AI 협업 지능</strong>을 확인해보세요.</p>
+        <div className="cover-badges">
+          <span className="cbadge">⚡ 약 3분</span>
+          <span className="cbadge">📍 5가지 상황</span>
+          <span className="cbadge">🔒 개인정보 수집 없음</span>
+        </div>
+        <button className="btn-go" onClick={onStart}>지금 바로 시작하기 →</button>
       </div>
     </div>
   );
 }
 
-function GameScreen({scenario,idx,total,score,onAnswer}) {
-  return (
-    <div className="game">
-      <div className="game-top">
-        <div className="dots">
+// ── GAME
+function Game({sc,idx,total,score,onAns}){
+  return(
+    <div className="page">
+      <div className="game-hdr">
+        <div className="prog-dots">
           {Array.from({length:total},(_,i)=>(
-            <div key={i} className={'dot'+(i<idx?' done':i===idx?' active':'')}/>
+            <div key={i} className={'pdot'+(i<idx?' done':i===idx?' active':'')}/>
           ))}
         </div>
-        <div className="score-badge">{score}점</div>
+        <div className="score-box"><span>{score}</span><span> / 100점</span></div>
       </div>
-      <div className="wrap">
-        <div className="scenario-card aup" key={scenario.id}>
-          <div className="scenario-num">상황 {scenario.id} / {total}</div>
-          <div className="scenario-ctx">{scenario.ctx}</div>
-          <div className="scenario-q">{scenario.q}</div>
+      <div className="inner">
+        <div className="sc-card au" key={sc.id}>
+          <div className="sc-num">상황 {sc.id} / {total}</div>
+          <div className="sc-ctx">{sc.ctx}</div>
+          <div className="sc-q">{sc.q}</div>
         </div>
-        <div className="options">
-          {scenario.opts.map((o,i)=>(
-            <button key={i} className="opt-btn" onClick={()=>onAnswer(i)}>
-              <span className="opt-lbl">{o.lbl}</span>
-              {o.txt}
+        <div className="opts">
+          {sc.opts.map((o,i)=>(
+            <button key={i} className="opt" onClick={()=>onAns(i)}>
+              <span className="olbl">{o.l}</span>{o.t}
             </button>
           ))}
         </div>
@@ -258,201 +280,157 @@ function GameScreen({scenario,idx,total,score,onAnswer}) {
   );
 }
 
-function RevealScreen({scenario,chosen,onNext,isLast}) {
-  const userOpt = scenario.opts[chosen];
-  const aiOpt  = scenario.opts[scenario.ai];
-  const same   = chosen === scenario.ai;
-  const best   = userOpt.pts >= 17;
-
-  return (
-    <div className="reveal ain">
-      <div className="reveal-top">
-        <div className="wrap">
-          <div className="reveal-num">상황 {scenario.id}</div>
-          <div className="reveal-q">{scenario.ctx}</div>
+// ── REVEAL
+function Reveal({sc,chosen,onNext,isLast}){
+  const u=sc.opts[chosen], a=sc.opts[sc.ai], same=chosen===sc.ai, best=u.p>=17;
+  return(
+    <div className="page ai">
+      <div className="rv-top">
+        <div className="inner">
+          <div className="rv-num">상황 {sc.id} 결과</div>
+          <div className="rv-ctx">{sc.ctx}</div>
         </div>
       </div>
-
-      <div className="choices">
-        {/* User's choice */}
-        <div className={`choice-card yours apop ${best?'best':''}`}>
-          <div className="choice-top">
-            <span className={`choice-tag ${best?'tag-best':'tag-yours'}`}>
-              {best ? '✓ 최적 선택':'나의 선택'}
-            </span>
-            <span className="choice-pts">+{userOpt.pts}점</span>
+      <div className="inner" style={{paddingTop:0}}>
+        <div className="vs-cards ap">
+          <div className={'vc vc-human'+(best?' vc-same':'')}>
+            <div className="vc-tag human">🧑 나의 선택</div>
+            <div className={'vc-pts human'}>+{u.p}</div>
+            <div className="vc-txt">{u.l}. {u.t}</div>
           </div>
-          <div className="choice-text"><strong style={{color:'#F0F0F0'}}>{userOpt.lbl}.</strong> {userOpt.txt}</div>
+          <div className={'vc '+(same?'vc-same':'vc-ai')} style={{animationDelay:'.08s'}}>
+            <div className="vc-tag ai-t">{same?'🤖 AI도 동일!':'🤖 AI의 선택'}</div>
+            <div className="vc-pts ai-t">+{a.p}</div>
+            <div className="vc-txt">{same?'AI도 같은 선택을 했을 거예요 ✓':a.l+'. '+a.t}</div>
+          </div>
         </div>
-
-        {/* AI's choice */}
-        {!same && (
-          <div className="choice-card ai apop" style={{animationDelay:'.1s'}}>
-            <div className="choice-top">
-              <span className="choice-tag tag-ai">🤖 AI의 선택</span>
-              <span className="choice-pts">+{aiOpt.pts}점</span>
-            </div>
-            <div className="choice-text"><strong style={{color:'#F0F0F0'}}>{aiOpt.lbl}.</strong> {aiOpt.txt}</div>
-          </div>
-        )}
-        {same && (
-          <div className="choice-card ai apop" style={{animationDelay:'.1s',borderColor:'rgba(36,198,153,.5)'}}>
-            <div className="choice-top">
-              <span className="choice-tag tag-same">🤖 AI의 선택과 일치!</span>
-            </div>
-            <div className="choice-text" style={{color:'#24C699'}}>AI도 같은 선택을 했을 거예요.</div>
-          </div>
-        )}
+        <div className="insight-box ap" style={{animationDelay:'.15s'}}>
+          <div className="insight-lbl">💡 핵심 인사이트</div>
+          <div className="insight-txt">{sc.why}</div>
+        </div>
+        <div className="diff-bar ap" style={{animationDelay:'.2s'}}>
+          <div className="diff-lbl">이번 상황 획득 점수</div>
+          <div className="diff-val" style={{color:u.p>=17?'#F97316':u.p>=10?'#FBBF24':'#555'}}>+{u.p}점</div>
+        </div>
+        <button className="btn-nxt" onClick={onNext}>{isLast?'결과 보기 →':'다음 상황 →'}</button>
       </div>
-
-      {/* Insight */}
-      <div className="reveal-insight apop" style={{animationDelay:'.2s'}}>
-        <div className="insight-lbl">💡 핵심 인사이트</div>
-        <div className="insight-txt">{scenario.insight}</div>
-      </div>
-
-      {/* Points */}
-      <div className="pts-pop apop" style={{animationDelay:'.3s'}}>
-        <div className="pts-num">+{userOpt.pts}</div>
-        <div className="pts-label">이번 상황 획득 점수</div>
-      </div>
-
-      <button className="btn-next" onClick={onNext}>
-        {isLast ? '결과 보기 →':'다음 상황 →'}
-      </button>
     </div>
   );
 }
 
-function ResultsScreen({answers,onRestart}) {
-  const score = answers.reduce((s,a,i)=>s+SCENARIOS[i].opts[a].pts,0);
-  const grade = getGrade(score);
-  const pct   = Math.round((score/100)*360);
-  const [toast,setToast] = useState(false);
+// ── RESULTS
+function Results({answers,onRestart}){
+  const score=answers.reduce((s,a,i)=>s+SC[i].opts[a].p,0);
+  const gr=getGrade(score);
+  const [toast,setToast]=useState(false);
+  const r=55, circ=2*Math.PI*r, pct=score/100;
 
   useEffect(()=>{window.scrollTo(0,0)},[]);
 
-  const share = ()=>{
-    const url = window.location.href;
+  const share=()=>{
+    const url=window.location.href;
     navigator.clipboard?.writeText(url).catch(()=>{
-      const el = document.createElement('textarea');
-      el.value=url; document.body.appendChild(el); el.select();
-      document.execCommand('copy'); document.body.removeChild(el);
+      const el=document.createElement('textarea');
+      el.value=url;document.body.appendChild(el);el.select();
+      document.execCommand('copy');document.body.removeChild(el);
     });
-    setToast(true); setTimeout(()=>setToast(false),2500);
+    setToast(true);setTimeout(()=>setToast(false),2500);
   };
 
-  return (
-    <div className="results">
-      <div className="results-hero aup">
-        <div className="brand-pill" style={{marginBottom:28}}>
-          <div className="bars"><span/><span/><span/><span/><span/></div>
+  return(
+    <div>
+      <div className="res-hero au">
+        <div className="bpill" style={{marginBottom:28}}>
+          <div className="bbars"><span/><span/><span/><span/><span/></div>
           Peoplequake Lab
         </div>
-        <div className="score-ring" style={{'--pct':`${pct}deg`}}>
-          <div>
-            <div className="score-num">{score}</div>
-            <div className="score-total">/ 100</div>
-          </div>
+        <div className="score-circle">
+          <svg width="110" height="110" viewBox="0 0 120 120">
+            <circle className="sc-bg" cx="60" cy="60" r={r}/>
+            <circle className="sc-fg" cx="60" cy="60" r={r}
+              stroke={gr.c}
+              strokeDasharray={circ}
+              strokeDashoffset={circ*(1-pct)}/>
+          </svg>
+          <div className="sc-inner"><div className="sc-n">{score}</div><div className="sc-d">/ 100</div></div>
         </div>
-        <div className="result-grade">{grade.grade}</div>
-        <h1 className="result-title" style={{color:grade.color}}>AI 협업 지능</h1>
-        <span className="result-sub">{grade.sub}</span>
+        <div className="res-grade">{gr.g}</div>
+        <h1 className="res-title" style={{color:gr.c}}>AI 협업 지능</h1>
+        <span className="res-sub">{gr.sub}</span>
       </div>
 
-      <div className="results-body ain">
-        {/* Grade description */}
-        <div className="r-section">
-          <div className="r-lbl">📊 분석 결과</div>
-          <div className="r-txt">{grade.desc}</div>
+      <div className="res-body ai">
+        <div className="rs">
+          <div className="rs-lbl">📊 분석 결과</div>
+          <div className="rs-txt">{gr.desc}</div>
         </div>
-
-        {/* Per-scenario review */}
-        <div className="r-section">
-          <div className="r-lbl">🗂️ 상황별 선택 돌아보기</div>
-          {SCENARIOS.map((s,i)=>{
-            const chosen = answers[i];
-            const pts    = s.opts[chosen].pts;
-            const isAI   = chosen === s.ai;
-            const color  = pts>=17?'#24C699':pts>=10?'#F0A500':'#555';
-            return (
-              <div key={i} className="review-item">
-                <div className="review-dot" style={{background:color}}/>
-                <div className="review-content">
-                  <div className="review-q">상황 {s.id}: {s.ctx.slice(0,30)}...</div>
-                  <div className="review-choice">{s.opts[chosen].lbl}. {s.opts[chosen].txt.slice(0,32)}...</div>
-                  <div className="review-pts" style={{color}}>
-                    +{pts}점{isAI?' 🤖 AI와 동일 선택':''}
-                  </div>
+        <div className="rs">
+          <div className="rs-lbl">🗂️ 상황별 돌아보기</div>
+          {SC.map((s,i)=>{
+            const c=answers[i], pts=s.opts[c].p, isAI=c===s.ai;
+            const col=pts>=17?'#F97316':pts>=10?'#FBBF24':'#555';
+            return(
+              <div key={i} className="rev-row">
+                <div className="rev-dot" style={{background:col}}/>
+                <div>
+                  <div className="rev-q">상황 {s.id} — {s.ctx.slice(0,28)}...</div>
+                  <div className="rev-c">{s.opts[c].l}. {s.opts[c].t.slice(0,30)}...</div>
+                  <div className="rev-p" style={{color:col}}>+{pts}점{isAI?' 🤖 AI와 동일':''}</div>
                 </div>
               </div>
             );
           })}
         </div>
-
-        {/* CTA */}
         <div className="cta-box">
-          <div className="cta-title">더 정확하게 알고 싶다면?</div>
-          <div className="cta-desc">
-            AI vs 나 게임은 5가지 상황에서의 선택을 봅니다.<br/>
-            PQ-AHC 검사는 당신의 AI 활용 <strong style={{color:'#F0F0F0'}}>심층 유형</strong>을<br/>
-            7가지 질문으로 더 정밀하게 분석합니다.
+          <div className="cta-t">더 정확하게 알고 싶다면?</div>
+          <div className="cta-d">
+            AI vs 나는 5가지 상황에서의 선택을 봅니다.<br/>
+            <strong style={{color:'#F0F0F0'}}>PQ-AHC 검사</strong>는 7가지 질문으로<br/>
+            당신의 AI 활용 심층 유형을 더 정밀하게 분석합니다.
           </div>
           <button className="btn-cta" onClick={()=>window.open('https://peoplequake-lab.github.io/ai-humanities-quiz/','_blank')}>
             PQ-AHC 검사 받기 (무료) →
           </button>
-          <div style={{display:'flex',gap:8,marginTop:12}}>
-            <button className="btn-again" onClick={share} style={{flex:1}}>🔗 링크 공유</button>
-            <button className="btn-again" onClick={onRestart} style={{flex:1}}>↺ 다시 하기</button>
+          <div className="act-row">
+            <button className="btn-sh" onClick={share}>🔗 링크 공유</button>
+            <button className="btn-ag" onClick={onRestart}>↺ 다시 하기</button>
           </div>
         </div>
       </div>
-
-      {toast && <div className="toast">✓ 링크가 복사되었습니다!</div>}
+      {toast&&<div className="toast">✓ 링크가 복사되었습니다!</div>}
     </div>
   );
 }
 
-function App() {
-  const [screen,setScreen] = useState('cover'); // cover|game|reveal|results
-  const [idx,setIdx]       = useState(0);
-  const [answers,setAnswers]= useState([]);
-  const [score,setScore]   = useState(0);
-  const [chosen,setChosen] = useState(null);
+// ── APP
+function App(){
+  const [screen,setScreen]=useState('cover');
+  const [idx,setIdx]=useState(0);
+  const [answers,setAnswers]=useState([]);
+  const [score,setScore]=useState(0);
+  const [chosen,setChosen]=useState(null);
 
   useEffect(()=>{
-    const el=document.getElementById('loading');
-    if(el){el.classList.add('hidden');setTimeout(()=>el.remove(),400);}
+    const el=document.getElementById('ld');
+    if(el){el.classList.add('h');setTimeout(()=>el.remove(),400);}
   },[]);
 
-  const handleAnswer = (optIdx)=>{
-    const pts = SCENARIOS[idx].opts[optIdx].pts;
-    setChosen(optIdx);
-    setScore(s=>s+pts);
-    setAnswers(a=>[...a,optIdx]);
+  const onAns=i=>{
+    setChosen(i);
+    setScore(s=>s+SC[idx].opts[i].p);
+    setAnswers(a=>[...a,i]);
     setScreen('reveal');
   };
-
-  const handleNext = ()=>{
-    if(idx < SCENARIOS.length-1){
-      setIdx(i=>i+1);
-      setChosen(null);
-      setScreen('game');
-      window.scrollTo(0,0);
-    } else {
-      setScreen('results');
-    }
+  const onNext=()=>{
+    if(idx<SC.length-1){setIdx(i=>i+1);setChosen(null);setScreen('game');window.scrollTo(0,0);}
+    else setScreen('results');
   };
+  const restart=()=>{setScreen('cover');setIdx(0);setAnswers([]);setScore(0);setChosen(null);window.scrollTo(0,0);};
 
-  const restart=()=>{
-    setScreen('cover');setIdx(0);setAnswers([]);setScore(0);setChosen(null);
-    window.scrollTo(0,0);
-  };
-
-  if(screen==='cover')   return <CoverScreen onStart={()=>setScreen('game')}/>;
-  if(screen==='game')    return <GameScreen scenario={SCENARIOS[idx]} idx={idx} total={SCENARIOS.length} score={score} onAnswer={handleAnswer}/>;
-  if(screen==='reveal')  return <RevealScreen scenario={SCENARIOS[idx]} chosen={chosen} onNext={handleNext} isLast={idx===SCENARIOS.length-1}/>;
-  if(screen==='results') return <ResultsScreen answers={answers} onRestart={restart}/>;
+  if(screen==='cover')   return <Cover onStart={()=>setScreen('game')}/>;
+  if(screen==='game')    return <Game sc={SC[idx]} idx={idx} total={SC.length} score={score} onAns={onAns}/>;
+  if(screen==='reveal')  return <Reveal sc={SC[idx]} chosen={chosen} onNext={onNext} isLast={idx===SC.length-1}/>;
+  if(screen==='results') return <Results answers={answers} onRestart={restart}/>;
   return null;
 }
 
