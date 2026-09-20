@@ -143,6 +143,7 @@ const {useState,useEffect,useRef} = React;
 const SC = [
   {
     id:1,
+    sum:"팀 회식 장소 정하기",
     ctx:"내일 팀 회식이 있습니다. 팀원 10명의 선호도(채식 2명, 매운 음식 불가 1명)와 예산(1인 3만원 이하)을 알고 있어요. 장소를 정해야 합니다.",
     q:"당신의 선택은?",
     opts:[
@@ -156,6 +157,7 @@ const SC = [
   },
   {
     id:2,
+    sum:"부모님 결혼기념일 편지 쓰기",
     ctx:"부모님 결혼 30주년 기념일입니다. 평소 말로는 못 했던 감사한 마음을 담은 편지를 쓰고 싶습니다.",
     q:"당신은 어떻게 쓰나요?",
     opts:[
@@ -169,6 +171,7 @@ const SC = [
   },
   {
     id:3,
+    sum:"처음 받은 계약서 검토하기",
     ctx:"처음 거래하는 파트너사로부터 계약서를 받았습니다. 법률 용어가 어렵고 계약 규모가 큽니다.",
     q:"어떻게 검토하나요?",
     opts:[
@@ -182,6 +185,7 @@ const SC = [
   },
   {
     id:4,
+    sum:"SNS 부정 리뷰에 대응하기",
     ctx:"고객이 SNS에 '최악의 서비스'라며 부정 리뷰를 남겼습니다. 수백 명이 이미 봤습니다.",
     q:"어떻게 대응하나요?",
     opts:[
@@ -195,6 +199,7 @@ const SC = [
   },
   {
     id:5,
+    sum:"연봉 40% 높은 이직 제안",
     ctx:"현재 회사에서 10년 근무했습니다. 스타트업에서 연봉 40% 높은 이직 제안이 왔습니다. 안정성 vs 성장 기회 사이에서 고민됩니다.",
     q:"어떻게 결정하나요?",
     opts:[
@@ -317,6 +322,14 @@ function Reveal({sc,chosen,onNext,isLast}){
 }
 
 // ── RESULTS
+// 돌아보기용: 글자 수가 넘치면 단어 경계에서 자르고 말줄임표를 붙인다
+function cutWord(t,n){
+  if(t.length<=n) return t;
+  const x=t.slice(0,n);
+  const i=x.lastIndexOf(' ');
+  return (i>n*0.6?x.slice(0,i):x).replace(/[.,·]$/,'')+'…';
+}
+
 function Results({answers,onRestart}){
   const score=answers.reduce((s,a,i)=>s+SC[i].opts[a].p,0);
   const gr=getGrade(score);
@@ -371,8 +384,8 @@ function Results({answers,onRestart}){
               <div key={i} className="rev-row">
                 <div className="rev-dot" style={{background:col}}/>
                 <div>
-                  <div className="rev-q">상황 {s.id} — {s.ctx.slice(0,28)}...</div>
-                  <div className="rev-c">{s.opts[c].l}. {s.opts[c].t.slice(0,30)}...</div>
+                  <div className="rev-q">상황 {s.id} — {s.sum||cutWord(s.ctx,30)}</div>
+                  <div className="rev-c">{s.opts[c].l}. {s.opts[c].t}</div>
                   <div className="rev-p" style={{color:col}}>+{pts}점{isAI?' 🤖 AI와 동일':''}</div>
                 </div>
               </div>
